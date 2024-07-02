@@ -1,12 +1,16 @@
-FROM python:3.11
+FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt update && apt install -y gettext
-RUN apt-get install postgis
-WORKDIR /app
+RUN apt-get update && apt-get install -y \
+    gettext \
+    postgresql \
+    postgresql-contrib \
+    postgis \
+    && apt-get clean
 
-WORKDIR /app
+WORKDIR /src
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .

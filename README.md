@@ -16,16 +16,13 @@ The Map My World API allows users to explore and review different locations and 
   - [Review Endpoints](#review-endpoints)
 - [Environment Configuration](#environment-configuration)
 - [Installation](#installation)
-  - [Install PostGIS Plugin on Linux](#install-postgis-plugin-on-linux)
+  - [Install PostgreSQL & PostGIS Plugin on Linux](#Install-Posgresql-&-PostGIS-Plugin-on-Linux)
   - [Setup Python Environment](#setup-python-environment)
   - [Docker Deployment](#docker-deployment)
 - [Running the Application](#running-the-application)
   - [Docker](#docker)
   - [Locally](#locally)
-- [Tests](#tests)
-  - [Test Files](#test-files)
-  - [Running Tests](#running-tests)
-  - [Example Test Case](#example-test-case)
+- [License](#License)
 
 ## Models
 
@@ -108,7 +105,7 @@ class LocationCategoryReviewedUpdate(BaseModel):
 ```
 
 ## Endpoints
-
+After enviroment configuration and running you can prove and see docs in **{your_server}/docs** or http://127.0.0.1:8000/docs (if the running is locally)
 ### Location Endpoints
   
 - **GET /api/v1/locations/{location_id}**: Get a location by ID.
@@ -157,16 +154,37 @@ class LocationCategoryReviewedUpdate(BaseModel):
 
 ## Installation
 
-### Install PostGIS Plugin on Linux
+### Install Posgresql & PostGIS Plugin on Linux
 
 To install the PostGIS plugin on a Linux machine, follow these steps:
 
 ```sh
 sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
 sudo apt-get install postgis postgresql-12-postgis-3
 ```
 
-### Setup Python Environment
+In a terminal access to psql as superuser:
+```sh
+sudo -i -u postgres
+```
+Open PostgreSQL interpreter:
+```sh
+psql
+```
+Add postgis plugin
+ ```sql
+CREATE EXTENSION postgis;
+```
+### Optional settings
+Create a database:
+```sql
+CREATE DATABASE mydatabase;
+CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypassword';
+GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+```
+
+## Setup Python Environment
 
 1. Create a virtual environment with Python 3.11:
 
@@ -180,19 +198,46 @@ source venv/bin/activate
 ```sh
 pip install -r requirements.txt
 ```
+3. In the main folder, create a `.env` file with the following variables:
+
+```python
+CORS_ORIGINS=http://localhost:3000,http://localhost:8000
+DRIVER_NAME=postgresql+psycopg2
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_HOST=your_db_host
+DB_PORT=your_db_port
+DB_NAME=your_db_name
+```
 
 ## Running the Application
 
 ### Docker
 To start the application using Docker:
 
+Build the image
 ```sh
 docker build -t map_my_world .
+```
+Run docker
+```sh
 docker run -d --name map_my_world_container map_my_world
 ```
 ### Locally
 To start the application locally:
 ```sh
-uvicorn src.v1.main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
+# License
+This project is distributed under the MIT License. You can find more details in the LICENSE file.
+
+The MIT License is an open-source license that allows for free distribution and modification of the software, provided that the copyright notice is included in all copies. It is one of the most permissive and widely used licenses in the world of open-source software.
+
+**Summary of the MIT License:**
+
+- You can use, copy, modify, merge, publish, distribute, sublicense, and/or sell the software.
+- You must include a copy of the copyright notice in all copies or substantial portions of the software.
+- The software is provided "as is," without any warranties.
+
+Be sure to refer to the [LICENSE](LICENSE) file for the full text of the MIT License and legal details. If you wish to use a different license, make sure to provide a link to the full text of that license instead of the MIT License.

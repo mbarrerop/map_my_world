@@ -1,6 +1,6 @@
 #!/bin/sh
 
-code=$(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:8002/)
+code=$(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:8000/)
 echo "response code: $code"
 
 if [ "$code" == "200" ]
