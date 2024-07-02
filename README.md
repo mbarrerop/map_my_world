@@ -105,7 +105,7 @@ class LocationCategoryReviewedUpdate(BaseModel):
 ```
 
 ## Endpoints
-After enviroment configuration and running you can prove and see docs in **{your_server}/docs** or http://127.0.0.1:8000/docs (if the running is locally)
+After enviroment configuration and running, you can prove and see docs in **{your_server}/docs** or http://127.0.0.1:8000/docs (if the running is locally)
 ### Location Endpoints
   
 - **GET /api/v1/locations/{location_id}**: Get a location by ID.
