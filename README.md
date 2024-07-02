@@ -18,7 +18,6 @@ The Map My World API allows users to explore and review different locations and 
 - [Installation](#installation)
   - [Install PostgreSQL & PostGIS Plugin on Linux](#Install-Posgresql-&-PostGIS-Plugin-on-Linux)
   - [Setup Python Environment](#setup-python-environment)
-  - [Docker Deployment](#docker-deployment)
 - [Running the Application](#running-the-application)
   - [Docker](#docker)
   - [Locally](#locally)
